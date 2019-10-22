@@ -99,6 +99,7 @@ class Generator {
             res = res.replace("{$i}", "%" + (i + 1) + "\$s")
         }
         res = res.replace("&", "&amp;")
+        res = res.replace("""('|\\')""".toRegex(), """\\'""")
         return res
     }
 
