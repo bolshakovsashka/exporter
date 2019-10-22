@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>exporter.exporter</id>
+    <name>Strings exportert</name>
+    <vendor>Petushki Ltd.</vendor>
+
+    <description><![CDATA[
+        bla bla bla
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <group id="exporterTopMenu"
+               text="String Generator"
+               description="String generator">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="exporter.generate"
+                    class="action.GenerateAction"
+                    text="Generate"
+                    description="Generate"/>
+        </group>
+    </actions>
+</idea-plugin>
