@@ -75,6 +75,9 @@ class Generator {
                 languagePostfix.toString(),
                 values.takeLast(values.size - 1).mapNotNull { rows ->
                     try {
+                        if (rows[0].toString().isBlank()) {
+                            return@mapNotNull null
+                        }
                         Translation(
                             rows[0].toString(),
                             fixParams(rows[index + 1].toString())
@@ -101,9 +104,9 @@ class Generator {
 
     private fun generateFiles(path: String, strings: List<Strings>) {
         val root = File(path, "core/src/main/res")
-        if (root.exists()) {
-            FileUtils.deleteDirectory(root)
-        }
+//        if (root.exists()) {
+//            FileUtils.deleteDirectory(root)
+//        }
         root.mkdirs()
         strings.forEach {
             val postfix = if (it.translation == "-en") "" else it.translation
@@ -112,6 +115,9 @@ class Generator {
                 languageFolder.mkdir()
             }
             val stringsFile = File(languageFolder, "strings.xml")
+            if (stringsFile.exists()) {
+                stringsFile.delete()
+            }
             val stringBuilder = StringBuilder()
             stringBuilder
                 .appendln("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
