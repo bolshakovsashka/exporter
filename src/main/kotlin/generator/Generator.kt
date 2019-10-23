@@ -110,7 +110,11 @@ class Generator {
 //        }
         root.mkdirs()
         strings.forEach {
-            val postfix = if (it.translation == "-en") "" else it.translation
+            val postfix = when (it.translation) {
+                "-en" -> ""
+                "-id" -> "-in"
+                else -> it.translation
+            }
             val languageFolder = File(root, "values$postfix")
             if (!languageFolder.exists()) {
                 languageFolder.mkdir()
