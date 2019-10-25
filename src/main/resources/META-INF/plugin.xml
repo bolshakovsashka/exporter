@@ -19,13 +19,18 @@
 
     <actions>
         <group id="exporterTopMenu"
-               text="String Generator"
-               description="String generator">
+               text="GEM"
+               description="GEM helper">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="exporter.generate"
-                    class="action.GenerateAction"
-                    text="Generate"
-                    description="Generate"/>
+            <action id="exporter.generate.strings"
+                    class="exporter.action.GenerateAction"
+                    text="Generate Strings"
+                    description="Generate strings"/>
+
+            <action id="exporter.generate.module"
+                    class="exporter.action.GenerateAction"
+                    text="Generate New Module"
+                    description="Generate new module"/>
         </group>
     </actions>
 </idea-plugin>

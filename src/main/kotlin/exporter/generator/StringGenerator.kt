@@ -1,4 +1,4 @@
-package generator
+package exporter.generator
 
 import com.google.api.client.auth.oauth2.Credential
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
@@ -13,13 +13,10 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import java.util.*
 import com.google.api.services.sheets.v4.Sheets
 import com.intellij.openapi.actionSystem.AnActionEvent
-import org.apache.commons.io.FileUtils
-import org.apache.commons.lang.text.StrBuilder
 import java.io.*
-import java.nio.file.Files
 
 
-class Generator {
+class StringGenerator {
     private val APPLICATION_NAME = "Google Sheets API Java Quickstart"
     private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
     private val TOKENS_DIRECTORY_PATH = "tokens"
@@ -40,7 +37,7 @@ class Generator {
     @Throws(IOException::class)
     private fun getCredentials(HTTP_TRANSPORT: NetHttpTransport): Credential {
         // Load client secrets.
-        val `in` = Generator::class.java.getResourceAsStream(CREDENTIALS_FILE_PATH)
+        val `in` = StringGenerator::class.java.getResourceAsStream(CREDENTIALS_FILE_PATH)
             ?: throw FileNotFoundException("Resource not found: $CREDENTIALS_FILE_PATH")
         val clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, InputStreamReader(`in`))
 
