@@ -19,8 +19,6 @@ import java.io.OutputStreamWriter
 import java.io.BufferedWriter
 
 
-
-
 class StringGenerator {
     private val APPLICATION_NAME = "Google Sheets API Java Quickstart"
     private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
