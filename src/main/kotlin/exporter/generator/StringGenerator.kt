@@ -14,6 +14,9 @@ import java.util.*
 import com.google.api.services.sheets.v4.Sheets
 import com.intellij.openapi.actionSystem.AnActionEvent
 import java.io.*
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+import java.io.BufferedWriter
 
 
 class StringGenerator {
@@ -128,7 +131,8 @@ class StringGenerator {
                 stringBuilder.appendln("    <string name=\"${it.key}\">${it.value}</string>")
             }
             stringBuilder.appendln("</resources>\n")
-            val out = FileWriter(stringsFile.path)
+
+            val out = BufferedWriter(OutputStreamWriter(FileOutputStream(stringsFile.path), "UTF-8"))
             out.write(stringBuilder.toString())
             out.close()
         }
