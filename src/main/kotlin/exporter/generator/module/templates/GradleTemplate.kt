@@ -1,7 +1,9 @@
-package exporter.generator.templates
+package exporter.generator.module.templates
 
-class GradleTemplate {
-    fun getTemplate(name: String): String {
+import exporter.generator.module.Config
+
+class GradleTemplate(val config: Config) : BaseTemplate(config) {
+    override fun getTemplate(): String {
         return "apply plugin: 'com.android.library'\n" +
                 "apply plugin: 'kotlin-android'\n" +
                 "apply plugin: 'kotlin-kapt'\n" +
@@ -48,7 +50,7 @@ class GradleTemplate {
                 "    mapDiagnosticLocations = true\n" +
                 "\n" +
                 "    arguments {\n" +
-                "        arg(\"moxyReflectorPackage\", \"com.synesis.gem.$name.moxybase\")\n" +
+                "        arg(\"moxyReflectorPackage\", \"com.synesis.gem.${config.packageName}\")\n" +
                 "    }\n" +
                 "}\n" +
                 "\n" +

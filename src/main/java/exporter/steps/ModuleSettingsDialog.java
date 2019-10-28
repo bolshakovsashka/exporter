@@ -4,12 +4,10 @@ import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.wm.WindowManager;
-import exporter.generator.ModuleGenerator;
+import exporter.generator.module.ModuleGenerator;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ModuleSettingsDialog extends JDialog {
     private JPanel contentPane;
@@ -18,6 +16,8 @@ public class ModuleSettingsDialog extends JDialog {
     private JTextField moduleName;
     private JTextField packageName;
     private JTextField classesPrefix;
+    private JTextField screenName;
+    private JCheckBox addToGemInjectorAppCheckBox;
     private String path;
 
     public ModuleSettingsDialog(String path) {
@@ -31,8 +31,15 @@ public class ModuleSettingsDialog extends JDialog {
     }
 
     private void create(ActionEvent e) {
-        if (!moduleName.getText().isEmpty() && !packageName.getText().isEmpty()  && !classesPrefix.getText().isEmpty() ) {
-            new ModuleGenerator(path, moduleName.getText(), packageName.getText(), classesPrefix.getText()).generate();
+        if (!moduleName.getText().isEmpty() && !packageName.getText().isEmpty()  && !classesPrefix.getText().isEmpty() && !screenName.getText().isEmpty()) {
+            new ModuleGenerator(
+                    path,
+                    moduleName.getText(),
+                    packageName.getText(),
+                    classesPrefix.getText(),
+                    screenName.getText(),
+                    addToGemInjectorAppCheckBox.isSelected())
+                    .generate();
 
             NotificationGroup noti2 = new NotificationGroup("extractor", NotificationDisplayType.BALLOON, true);
             noti2.createNotification(
