@@ -1,6 +1,8 @@
 package exporter.generator.module
 
 import exporter.generator.module.templates.*
+import org.apache.batik.bridge.TextUtilities
+import org.apache.commons.lang.text.StrBuilder
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileOutputStream
@@ -41,9 +43,15 @@ class ModuleGenerator(
     }
 
     private fun generateLayout() {
+        val layoutName = StringBuilder().apply {
+            config.classesPrefix.split("(?<=.)(?=\\p{Lu})".toRegex()).forEach {
+                append("_${it.toLowerCase()}")
+            }
+        }.toString()
+        config.classesPrefix.split("(?=[A-Z])")
         writeTextToFile(
-            File(config.layoutFolder, "fragment_${config.classesPrefix.toLowerCase()}.xml"),
-            FragmentTemplate(config).getTemplate()
+            File(config.layoutFolder, "fragment${layoutName}.xml"),
+            LayoutTemplate(config).getTemplate()
         )
     }
 

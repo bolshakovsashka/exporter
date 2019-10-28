@@ -50,7 +50,7 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "    mapDiagnosticLocations = true\n" +
                 "\n" +
                 "    arguments {\n" +
-                "        arg(\"moxyReflectorPackage\", \"com.synesis.gem.${config.packageName}\")\n" +
+                "        arg(\"moxyReflectorPackage\", \"com.synesis.gem.${config.packageName}.moxybase\")\n" +
                 "    }\n" +
                 "}\n" +
                 "\n" +

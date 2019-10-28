@@ -1,10 +1,10 @@
 <idea-plugin>
     <id>exporter.exporter</id>
-    <name>Strings exportert</name>
+    <name>GEM Utils</name>
     <vendor>Petushki Ltd.</vendor>
 
     <description><![CDATA[
-        bla bla bla
+        Plugin to generate strings and modules
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
