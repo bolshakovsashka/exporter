@@ -43,14 +43,8 @@ class ModuleGenerator(
     }
 
     private fun generateLayout() {
-        val layoutName = StringBuilder().apply {
-            config.classesPrefix.split("(?<=.)(?=\\p{Lu})".toRegex()).forEach {
-                append("_${it.toLowerCase()}")
-            }
-        }.toString()
-        config.classesPrefix.split("(?=[A-Z])")
         writeTextToFile(
-            File(config.layoutFolder, "fragment${layoutName}.xml"),
+            File(config.layoutFolder, "${config.getLayoutName()}.xml"),
             LayoutTemplate(config).getTemplate()
         )
     }

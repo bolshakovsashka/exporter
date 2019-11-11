@@ -171,7 +171,7 @@ class Config(
         return "${getRootScreenImport()}.business.interactor.${getInteractorName()}"
     }
 
-    fun getLayoutFileName(): String {
-        return "fragment_${classesPrefix.toLowerCase()}"
+    fun getLayoutName(): String {
+        return "fragment_" + classesPrefix.split("(?<=.)(?=\\p{Lu})".toRegex()).joinToString(separator = "_").toLowerCase()
     }
 }

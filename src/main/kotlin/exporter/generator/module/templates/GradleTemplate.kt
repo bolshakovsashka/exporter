@@ -43,6 +43,10 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "        sourceCompatibility = JavaVersion.VERSION_1_8\n" +
                 "        targetCompatibility = JavaVersion.VERSION_1_8\n" +
                 "    }\n" +
+                "\n" +
+                "    kotlinOptions {\n" +
+                "        jvmTarget = \"1.8\"\n" +
+                "    }\n" +
                 "}\n" +
                 "\n" +
                 "kapt {\n" +

@@ -13,7 +13,7 @@ class FragmentTemplate(val config: Config) : BaseTemplate(config) {
                 "import com.arellomobile.mvp.presenter.ProvidePresenter\n" +
                 "import com.synesis.gem.core.di.IApp\n" +
                 "import com.synesis.gem.core.ui.screens.base.fragment.BaseFragment\n" +
-                "import com.synesis.gem.test.R\n" +
+                "import com.synesis.gem.${config.packageName}.R\n" +
                 "import ${config.getDIComponentImport()}\n" +
                 "import ${config.getPresenterImport()}\n" +
                 "import ${config.getMVPViewImport()}\n" +
@@ -37,7 +37,7 @@ class FragmentTemplate(val config: Config) : BaseTemplate(config) {
                 "\n" +
                 "    override fun providePresenter(): ${config.getPresenterName()} = presenter\n" +
                 "\n" +
-                "    override fun getResIdLayout(): Int = R.layout.${config.getLayoutFileName()}" +
+                "    override fun getResIdLayout(): Int = R.layout.${config.getLayoutName()}" +
                 "\n" +
                 "    override fun injectComponent(savedInstanceState: Bundle?) {\n" +
                 "        ${config.getDIComponentName()}.init((requireContext().applicationContext as IApp).getAppComponent()).inject(this)\n" +
