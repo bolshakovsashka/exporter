@@ -37,16 +37,16 @@ class FragmentTemplate(val config: Config) : BaseTemplate(config) {
                 "\n" +
                 "    override fun providePresenter(): ${config.getPresenterName()} = presenter\n" +
                 "\n" +
-                "    override fun getResIdLayout(): Int = R.layout.${config.getLayoutName()}" +
+                "    override fun getResIdLayout(): Int = R.layout.${config.getLayoutName()}\n" +
                 "\n" +
                 "    override fun injectComponent(savedInstanceState: Bundle?) {\n" +
-                "        ${config.getDIComponentName()}.init((requireContext().applicationContext as IApp).getAppComponent()).inject(this)\n" +
+                "        ${config.getDIComponentName()}.init(getAppComponent()).inject(this)\n" +
                 "    }\n" +
                 "\n" +
                 "    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\n" +
                 "        viewController = ${config.getViewControllerName()}(view)\n" +
                 "        super.onViewCreated(view, savedInstanceState)\n" +
-                "    }" +
+                "    }\n" +
                 "}"
     }
 }

@@ -127,9 +127,11 @@ class StringGenerator {
             stringBuilder
                 .appendln("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
                 .appendln("<resources>")
-            it.values.forEach {
-                stringBuilder.appendln("    <string name=\"${it.key}\">${it.value}</string>")
-            }
+            it.values
+                .filter { it.value.isNotEmpty() && it.key.isNotEmpty() }
+                .forEach {
+                    stringBuilder.appendln("    <string name=\"${it.key}\">${it.value}</string>")
+                }
             stringBuilder.appendln("</resources>\n")
 
             val out = BufferedWriter(OutputStreamWriter(FileOutputStream(stringsFile.path), "UTF-8"))
