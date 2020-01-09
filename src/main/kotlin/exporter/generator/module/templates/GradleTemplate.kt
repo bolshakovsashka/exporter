@@ -38,6 +38,10 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "        prod {\n" +
                 "            dimension \"default\"\n" +
                 "        }\n" +
+                "\n" +
+                "        beta {\n" +
+                "            dimension \"default\"\n" +
+                "        }\n" +
                 "    }\n" +
                 "    compileOptions {\n" +
                 "        sourceCompatibility = JavaVersion.VERSION_1_8\n" +
