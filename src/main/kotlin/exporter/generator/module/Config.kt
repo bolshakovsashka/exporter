@@ -7,8 +7,7 @@ class Config(
     val moduleName: String,
     val packageName: String,
     val classesPrefix: String,
-    val screenName: String,
-    val addToGemInjectorAppCheckBox: Boolean
+    val screenName: String
 ) {
 
     val rootFolder = File(path, moduleName).apply {
@@ -47,10 +46,14 @@ class Config(
         }
     }
 
-    val screenFolder = File(packageFolder, screenName).apply {
-        if (!exists()) {
-            mkdirs()
+    val screenFolder = if (screenName.isNotBlank()) {
+        File(packageFolder, screenName).apply {
+            if (!exists()) {
+                mkdirs()
+            }
         }
+    } else {
+        packageFolder
     }
 
     val interactorFolder = File(screenFolder, "business/interactor").apply {

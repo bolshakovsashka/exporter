@@ -56,10 +56,6 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "kapt {\n" +
                 "    correctErrorTypes = true\n" +
                 "    mapDiagnosticLocations = true\n" +
-                "\n" +
-                "    arguments {\n" +
-                "        arg(\"moxyReflectorPackage\", \"com.synesis.gem.${config.packageName}.moxybase\")\n" +
-                "    }\n" +
                 "}\n" +
                 "\n" +
                 "dependencies {\n" +
@@ -67,7 +63,7 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "\n" +
                 "    implementation project(':core')\n" +
                 "\n" +
-                "    kapt \"com.arello-mobile:moxy-compiler:\$projectExt.moxy\"\n" +
+                "    kapt \"com.github.moxy-community:moxy-compiler:\$projectExt.moxy\"\n" +
                 "    kapt \"com.google.dagger:dagger-compiler:\$projectExt.dagger\"\n" +
                 "}\n"
     }

@@ -6,7 +6,7 @@ class PresenterTemplate(val config: Config) : BaseTemplate(config) {
     override fun getTemplate(): String {
         return "package ${config.getRootScreenImport()}.presentation.presenter\n" +
                 "\n" +
-                "import com.arellomobile.mvp.InjectViewState\n" +
+                "import moxy.InjectViewState\n" +
                 "import com.synesis.gem.core.api.errorshandling.ErrorHandler\n" +
                 "import com.synesis.gem.core.common.rx.SchedulerProvider\n" +
                 "import com.synesis.gem.core.ui.base.BasePresenter\n" +
