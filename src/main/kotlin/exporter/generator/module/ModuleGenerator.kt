@@ -15,11 +15,10 @@ class ModuleGenerator(
     moduleName: String,
     packageName: String,
     classesPrefix: String,
-    screenName: String,
-    addToGemInjectorAppCheckBox: Boolean
+    screenName: String
 ) {
 
-    private val config = Config(path, moduleName, packageName, classesPrefix, screenName, addToGemInjectorAppCheckBox)
+    private val config = Config(path, moduleName, packageName, classesPrefix, screenName)
 
     fun generate() {
         try {
@@ -36,7 +35,6 @@ class ModuleGenerator(
             generateFragment()
             generateLayout()
             includeIntoSettingsGradle()
-            includeIntoGemInjectorApp()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -49,28 +47,17 @@ class ModuleGenerator(
         )
     }
 
-    private fun includeIntoGemInjectorApp() {
-        if (config.addToGemInjectorAppCheckBox) {
-            val gemInjectorAppFile =
-                File(config.path, "injector/src/main/java/com/synesis/gem/injector/di/GemInjectorApp.kt")
-            var text = StringBuilder(String(Files.readAllBytes(gemInjectorAppFile.toPath()))).toString()
-            val regex = "\\)\\nclass"
-            val pattern = Pattern.compile(regex, Pattern.MULTILINE)
-            val matcher = pattern.matcher(text)
-            text = matcher.replaceFirst(",\n        \"com.synesis.gem.${config.packageName}.moxybase\")\nclass")
-
-            writeTextToFile(gemInjectorAppFile, text)
-        }
-    }
-
     private fun includeIntoSettingsGradle() {
         val settingsGradle = File(config.path, "settings.gradle")
-        val text = StringBuilder(String(Files.readAllBytes(settingsGradle.toPath())))
-            .appendln()
-            .appendln("include \':${config.moduleName}\'")
-            .toString()
+        val settingsGradleText = settingsGradle.readText()
+        if (!settingsGradleText.contains(config.moduleName)) {
+            val text = StringBuilder(String(Files.readAllBytes(settingsGradle.toPath())))
+                .appendln()
+                .appendln("include \':${config.moduleName}\'")
+                .toString()
 
-        writeTextToFile(settingsGradle, text)
+            writeTextToFile(settingsGradle, text)
+        }
     }
 
     private fun generateFragment() {
@@ -141,7 +128,9 @@ class ModuleGenerator(
         writeTextToFile(File(config.rootFolder, "build.gradle"), GradleTemplate(config).getTemplate())
     }
 
-    private fun writeTextToFile(file: File, text: String) {
+    private fun writeTextToFile(file: File, text: String, overWrite: Boolean = false) {
+        if (file.exists() && overWrite) return
+
         try {
             val out = BufferedWriter(OutputStreamWriter(FileOutputStream(file.path), "UTF-8"))
             out.write(text)

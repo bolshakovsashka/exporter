@@ -17,7 +17,6 @@ public class ModuleSettingsDialog extends JDialog {
     private JTextField packageName;
     private JTextField classesPrefix;
     private JTextField screenName;
-    private JCheckBox addToGemInjectorAppCheckBox;
     private String path;
 
     public ModuleSettingsDialog(String path) {
@@ -31,14 +30,13 @@ public class ModuleSettingsDialog extends JDialog {
     }
 
     private void create(ActionEvent e) {
-        if (!moduleName.getText().isEmpty() && !packageName.getText().isEmpty()  && !classesPrefix.getText().isEmpty() && !screenName.getText().isEmpty()) {
+        if (!moduleName.getText().isEmpty() && !packageName.getText().isEmpty()  && !classesPrefix.getText().isEmpty()) {
             new ModuleGenerator(
                     path,
                     moduleName.getText(),
                     packageName.getText(),
                     classesPrefix.getText(),
-                    screenName.getText(),
-                    addToGemInjectorAppCheckBox.isSelected())
+                    screenName.getText())
                     .generate();
 
             NotificationGroup noti2 = new NotificationGroup("extractor", NotificationDisplayType.BALLOON, true);

@@ -9,8 +9,6 @@ class FragmentTemplate(val config: Config) : BaseTemplate(config) {
                 "\n" +
                 "import android.os.Bundle\n" +
                 "import android.view.View\n" +
-                "import com.arellomobile.mvp.presenter.InjectPresenter\n" +
-                "import com.arellomobile.mvp.presenter.ProvidePresenter\n" +
                 "import com.synesis.gem.core.di.IApp\n" +
                 "import com.synesis.gem.core.ui.screens.base.fragment.BaseFragment\n" +
                 "import com.synesis.gem.${config.packageName}.R\n" +
@@ -25,15 +23,9 @@ class FragmentTemplate(val config: Config) : BaseTemplate(config) {
                 "    @Inject\n" +
                 "    lateinit var presenterProvider: Provider<${config.getPresenterName()}>\n" +
                 "\n" +
-                "    @InjectPresenter\n" +
-                "    lateinit var presenter: ${config.getPresenterName()}\n" +
+                "    private val presenter by moxyPresenter { presenterProvider.get() }\n" +
                 "\n" +
                 "    private lateinit var viewController: ${config.getViewControllerName()}\n" +
-                "\n" +
-                "    @ProvidePresenter\n" +
-                "    fun createPresenter(): ${config.getPresenterName()} {\n" +
-                "        return presenterProvider.get()\n" +
-                "    }\n" +
                 "\n" +
                 "    override fun providePresenter(): ${config.getPresenterName()} = presenter\n" +
                 "\n" +
