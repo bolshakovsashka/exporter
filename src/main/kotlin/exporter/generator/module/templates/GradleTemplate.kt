@@ -65,6 +65,9 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "\n" +
                 "    kapt \"com.github.moxy-community:moxy-compiler:\$projectExt.moxy\"\n" +
                 "    kapt \"com.google.dagger:dagger-compiler:\$projectExt.dagger\"\n" +
+                "\n" +
+                "    //tests\n" +
+                "    testImplementation project(path: ':core', configuration: 'testDependencies')\n" +
                 "}\n"
     }
 }

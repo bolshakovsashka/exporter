@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'exporter'
-version '1.1.9'
+version '1.1.10'
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2019.2'
+    version '2019.3'
 }
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
@@ -29,6 +29,6 @@ compileTestKotlin {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      Version bump.
+      """
 }
