@@ -31,10 +31,10 @@
                     class="exporter.action.GenerateAction"
                     text="Generate New Module"
                     description="Generate new module"/>
-<!--            <action id="exporter.provide.class]"-->
-<!--                    class="exporter.action.GenerateAction"-->
-<!--                    text="Provide class"-->
-<!--                    description="Provide class"/>-->
+            <action id="exporter.provide.class"
+                    class="exporter.action.GenerateAction"
+                    text="Provide class"
+                    description="Provide class"/>
         </group>
     </actions>
 </idea-plugin>

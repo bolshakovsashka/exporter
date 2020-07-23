@@ -5,6 +5,7 @@ import com.intellij.notification.NotificationGroup
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import exporter.generator.provide.ClassProvider
 import exporter.generator.strings.StringGenerator
 import exporter.steps.ModuleSettingsDialog
 
@@ -17,6 +18,31 @@ class GenerateAction : AnAction() {
             "Generate Strings" -> {
                 generateStrings(e)
             }
+            "Provide class" -> {
+                provideClass(e)
+            }
+        }
+    }
+
+    private fun provideClass(actionEvent: AnActionEvent) {
+        try {
+            ClassProvider().provide(actionEvent)
+            val noti = NotificationGroup("extractor", NotificationDisplayType.BALLOON, true)
+            noti.createNotification(
+                "Provide finished",
+                "Provide function copied to clipboard",
+                NotificationType.INFORMATION,
+                null
+            ).notify(actionEvent.project)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            val noti = NotificationGroup("extractor", NotificationDisplayType.BALLOON, true)
+            noti.createNotification(
+                "Provide failed",
+                "Provide faield with exception: " + e.message,
+                NotificationType.INFORMATION,
+                null
+            ).notify(actionEvent.project)
         }
     }
 
@@ -45,6 +71,7 @@ class GenerateAction : AnAction() {
                 null
             ).notify(e.project)
         } catch (exception: Exception) {
+            exception.printStackTrace()
             val noti2 = NotificationGroup("extractor", NotificationDisplayType.BALLOON, true)
             noti2.createNotification(
                 "String Exporter",
