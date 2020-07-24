@@ -19,21 +19,27 @@
 
     <actions>
         <group id="exporterTopMenu"
-               text="GEM"
+               text="GEM Utils"
                description="GEM helper">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="exporter.generate.strings"
                     class="exporter.action.GenerateAction"
-                    text="Generate Strings"
-                    description="Generate strings"/>
+                    text="Generate Strings Old"
+                    description="Generate strings old dock"/>
+
+            <action id="exporter.generate.strings.new"
+                    class="exporter.action.GenerateAction"
+                    text="Generate Strings New"
+                    description="Generate strings new dock"/>
 
             <action id="exporter.generate.module"
                     class="exporter.action.GenerateAction"
                     text="Generate New Module"
                     description="Generate new module"/>
+
             <action id="exporter.provide.class"
                     class="exporter.action.GenerateAction"
-                    text="Provide class"
+                    text="Provide Class"
                     description="Provide class"/>
         </group>
     </actions>

@@ -15,10 +15,13 @@ class GenerateAction : AnAction() {
             "Generate New Module" -> {
                 generateNewModule(e)
             }
-            "Generate Strings" -> {
-                generateStrings(e)
+            "Generate Strings Old" -> {
+                generateStrings(e, false)
             }
-            "Provide class" -> {
+            "Generate Strings New" -> {
+                generateStrings(e, true)
+            }
+            "Provide Class" -> {
                 provideClass(e)
             }
         }
@@ -53,7 +56,7 @@ class GenerateAction : AnAction() {
         dialog.isVisible = true
     }
 
-    private fun generateStrings(e: AnActionEvent) {
+    private fun generateStrings(e: AnActionEvent, useNewDock: Boolean) {
         val noti = NotificationGroup("extractor", NotificationDisplayType.BALLOON, true)
         noti.createNotification(
             "String Exporter",
@@ -62,7 +65,11 @@ class GenerateAction : AnAction() {
             null
         ).notify(e.project)
         try {
-            StringGenerator().generate(e)
+            if (useNewDock) {
+                StringGenerator().generate(e)
+            } else {
+                StringGenerator().generateOld(e)
+            }
             val noti2 = NotificationGroup("extractor", NotificationDisplayType.BALLOON, true)
             noti2.createNotification(
                 "String Exporter",
