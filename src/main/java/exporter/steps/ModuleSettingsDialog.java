@@ -4,6 +4,7 @@ import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.ProjectManager;
+import exporter.NotificationManager;
 import exporter.generator.module.ModuleGenerator;
 
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class ModuleSettingsDialog extends JDialog {
     }
 
     private void create(ActionEvent e) {
-        if (!moduleName.getText().isEmpty() && !packageName.getText().isEmpty()  && !classesPrefix.getText().isEmpty()) {
+        if (!moduleName.getText().isEmpty() && !packageName.getText().isEmpty() && !classesPrefix.getText().isEmpty()) {
             new ModuleGenerator(
                     path,
                     moduleName.getText(),
@@ -39,13 +40,12 @@ public class ModuleSettingsDialog extends JDialog {
                     screenName.getText())
                     .generate();
 
-            NotificationGroup noti2 = new NotificationGroup("extractor", NotificationDisplayType.BALLOON, true);
-            noti2.createNotification(
+            NotificationManager.Companion.showInfoNotification(
+                    "exporter.module",
                     "New module created",
                     "Please sync gradle to see it",
-                    NotificationType.INFORMATION,
-                    null
-            ).notify(ProjectManager.getInstance().getOpenProjects()[0]);
+                    ProjectManager.getInstance().getOpenProjects()[0]
+            );
             dispose();
         }
     }

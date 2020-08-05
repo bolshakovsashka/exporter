@@ -1,4 +1,4 @@
-package exporter.generator.strings
+package exporter.generator.strings.engines.excel
 
 import com.google.api.client.auth.oauth2.Credential
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
@@ -13,6 +13,10 @@ import com.google.api.client.json.jackson2.JacksonFactory
 import java.util.*
 import com.google.api.services.sheets.v4.Sheets
 import com.intellij.openapi.actionSystem.AnActionEvent
+import exporter.generator.strings.FixValueFormatUtils
+import exporter.generator.strings.StringsFilesGenerator
+import exporter.generator.strings.models.Strings
+import exporter.generator.strings.models.Translation
 import java.io.*
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
@@ -20,6 +24,10 @@ import java.io.BufferedWriter
 
 
 class StringGenerator {
+
+    private val fixValueFormatUtils = FixValueFormatUtils()
+    private val stringsFilesGenerator = StringsFilesGenerator()
+
     private val JSON_FACTORY = JacksonFactory.getDefaultInstance()
     private val TOKENS_DIRECTORY_PATH = "tokens"
 
@@ -79,7 +87,7 @@ class StringGenerator {
                         }
                         Translation(
                             rows[0].toString(),
-                            fixParams(rows[index + 1].toString())
+                            fixValueFormatUtils.fixParams(rows[index + 1].toString())
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -88,7 +96,7 @@ class StringGenerator {
                     }
                 })
         }
-        generateFiles(e.project!!.basePath!!, strings)
+        stringsFilesGenerator. generateFiles(e.project!!.basePath!!, strings)
         return values.toTypedArray().contentToString()
     }
 
@@ -117,7 +125,7 @@ class StringGenerator {
                         try {
                             val key = row[0].toString()
                             if (key.isNotBlank()) {
-                                val value = fixParams(row[index + 4].toString())
+                                val value = fixValueFormatUtils.fixParams(row[index + 4].toString())
                                 Translation(
                                     key = key,
                                     value = value
@@ -136,60 +144,9 @@ class StringGenerator {
                 null
             }
         }
-        generateFiles(e.project!!.basePath!!, strings)
+        stringsFilesGenerator.generateFiles(e.project!!.basePath!!, strings)
         return values.toTypedArray().contentToString()
     }
-
-    private fun fixParams(str: String): String {
-        var res = str
-        for (i in 0 until 10) {
-            res = res.replace("{$i}", "%" + (i + 1) + "\$s")
-        }
-        res = res.replace("&", "&amp;")
-        res = res.replace("""('|\\')""".toRegex(), """\\'""")
-        return res
-    }
-
-    private fun generateFiles(path: String, strings: List<Strings>) {
-        val root = File(path, "core/src/main/res")
-//        if (root.exists()) {
-//            FileUtils.deleteDirectory(root)
-//        }
-        root.mkdirs()
-        strings.forEach {
-            val postfix = when (it.translation) {
-                "-en" -> ""
-                "-id" -> "-in"
-                else -> it.translation
-            }
-            val languageFolder = File(root, "values$postfix")
-            if (!languageFolder.exists()) {
-                languageFolder.mkdir()
-            }
-            val stringsFile = File(languageFolder, "strings.xml")
-            if (stringsFile.exists()) {
-                stringsFile.delete()
-            }
-            val stringBuilder = StringBuilder()
-            stringBuilder
-                .appendln("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                .appendln("<resources>")
-            it.values
-                .filter { it.value.isNotEmpty() && it.key.isNotEmpty() }
-                .forEach {
-                    stringBuilder.appendln("    <string name=\"${it.key}\">${it.value}</string>")
-                }
-            stringBuilder.appendln("</resources>\n")
-
-            val out = BufferedWriter(OutputStreamWriter(FileOutputStream(stringsFile.path), "UTF-8"))
-            out.write(stringBuilder.toString())
-            out.close()
-        }
-    }
-
-
-    private data class Strings(val translation: String, val values: List<Translation>)
-    private data class Translation(val key: String, val value: String)
 
     companion object {
         private const val APPLICATION_NAME = "GEM4ME String Generator"

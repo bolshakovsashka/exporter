@@ -23,22 +23,22 @@
                description="GEM helper">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="exporter.generate.strings"
-                    class="exporter.action.GenerateAction"
-                    text="Generate Strings Old"
-                    description="Generate strings old dock"/>
+                    class="exporter.action.StringsGenerateAction"
+                    text="Generate Strings"
+                    description="Generate strings"/>
 
-            <action id="exporter.generate.strings.new"
-                    class="exporter.action.GenerateAction"
-                    text="Generate Strings New"
-                    description="Generate strings new dock"/>
+            <action id="exporter.generate.strings.locize"
+                    class="exporter.action.LocizeGenerateAction"
+                    text="Generate Strings From Locize.io"
+                    description="Generate Strings From Locize.io"/>
 
             <action id="exporter.generate.module"
-                    class="exporter.action.GenerateAction"
+                    class="exporter.action.ModuleGenerateAction"
                     text="Generate New Module"
                     description="Generate new module"/>
 
             <action id="exporter.provide.class"
-                    class="exporter.action.GenerateAction"
+                    class="exporter.action.ProvideClassAction"
                     text="Provide Class"
                     description="Provide class"/>
         </group>
