@@ -1,8 +1,8 @@
 package exporter.steps;
 
-import com.intellij.notification.NotificationDisplayType;
-import com.intellij.notification.NotificationGroup;
-import com.intellij.notification.NotificationType;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.ProjectManager;
 import exporter.NotificationManager;
 import exporter.generator.module.ModuleGenerator;
@@ -20,17 +20,16 @@ public class ModuleSettingsDialog extends JDialog {
     private JTextField screenName;
     private String path;
 
-    public ModuleSettingsDialog(String path) {
+    public ModuleSettingsDialog(String path, AnActionEvent anActionEvent) {
         this.path = path;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonCreate);
-
-        buttonCreate.addActionListener(e -> create(e));
+        buttonCreate.addActionListener(e -> create(e, anActionEvent));
         buttonCancel.addActionListener(e -> dispose());
     }
 
-    private void create(ActionEvent e) {
+    private void create(ActionEvent e, AnActionEvent anActionEvent) {
         if (!moduleName.getText().isEmpty() && !packageName.getText().isEmpty() && !classesPrefix.getText().isEmpty()) {
             new ModuleGenerator(
                     path,
@@ -40,10 +39,14 @@ public class ModuleSettingsDialog extends JDialog {
                     screenName.getText())
                     .generate();
 
+            ActionManager am = ActionManager.getInstance();
+            AnAction sync = am.getAction("Android.SyncProject");
+            sync.actionPerformed(anActionEvent);
+
             NotificationManager.Companion.showInfoNotification(
                     "exporter.module",
                     "New module created",
-                    "Please sync gradle to see it",
+                    "Project sync started",
                     ProjectManager.getInstance().getOpenProjects()[0]
             );
             dispose();
@@ -51,7 +54,7 @@ public class ModuleSettingsDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        ModuleSettingsDialog dialog = new ModuleSettingsDialog("");
+        ModuleSettingsDialog dialog = new ModuleSettingsDialog("", null);
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);

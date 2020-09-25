@@ -11,7 +11,7 @@ class ModuleGenerateAction : AnAction() {
     }
 
     private fun generate(anActionEvent: AnActionEvent) {
-        val dialog = ModuleSettingsDialog(anActionEvent.project!!.basePath!!)
+        val dialog = ModuleSettingsDialog(anActionEvent.project!!.basePath!!, anActionEvent)
         dialog.pack()
         dialog.setLocationRelativeTo(null);  // *** this will center your app ***
         dialog.isVisible = true

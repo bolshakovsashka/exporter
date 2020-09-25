@@ -15,6 +15,7 @@ class FragmentTemplate(val config: Config) : BaseTemplate(config) {
                 "import ${config.getDIComponentImport()}\n" +
                 "import ${config.getPresenterImport()}\n" +
                 "import ${config.getMVPViewImport()}\n" +
+                "import moxy.ktx.moxyPresenter\n" +
                 "import javax.inject.Inject\n" +
                 "import javax.inject.Provider\n" +
                 "\n" +

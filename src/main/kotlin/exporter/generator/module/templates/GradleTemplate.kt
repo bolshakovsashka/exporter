@@ -8,8 +8,11 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "apply plugin: 'kotlin-android'\n" +
                 "apply plugin: 'kotlin-kapt'\n" +
                 "apply plugin: 'kotlin-android-extensions'\n" +
+                "apply from: \"\${rootProject.projectDir}/flavors.gradle\"\n" +
                 "\n" +
                 "android {\n" +
+                "    with flavorConfig\n" +
+                "\n" +
                 "    def globalConfig = rootProject.ext\n" +
                 "\n" +
                 "    compileSdkVersion globalConfig.compileSdkVersion\n" +
@@ -20,29 +23,6 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "        vectorDrawables.useSupportLibrary = true\n" +
                 "    }\n" +
                 "\n" +
-                "    flavorDimensions \"default\"\n" +
-                "\n" +
-                "    productFlavors {\n" +
-                "        stage1 {\n" +
-                "            dimension \"default\"\n" +
-                "        }\n" +
-                "\n" +
-                "        stage2 {\n" +
-                "            dimension \"default\"\n" +
-                "        }\n" +
-                "\n" +
-                "        preprod {\n" +
-                "            dimension \"default\"\n" +
-                "        }\n" +
-                "\n" +
-                "        prod {\n" +
-                "            dimension \"default\"\n" +
-                "        }\n" +
-                "\n" +
-                "        beta {\n" +
-                "            dimension \"default\"\n" +
-                "        }\n" +
-                "    }\n" +
                 "    compileOptions {\n" +
                 "        sourceCompatibility = JavaVersion.VERSION_1_8\n" +
                 "        targetCompatibility = JavaVersion.VERSION_1_8\n" +
@@ -65,9 +45,6 @@ class GradleTemplate(val config: Config) : BaseTemplate(config) {
                 "\n" +
                 "    kapt \"com.github.moxy-community:moxy-compiler:\$projectExt.moxy\"\n" +
                 "    kapt \"com.google.dagger:dagger-compiler:\$projectExt.dagger\"\n" +
-                "\n" +
-                "    //tests\n" +
-                "    testImplementation project(path: ':core', configuration: 'testDependencies')\n" +
-                "}\n"
+                "}"
     }
 }
