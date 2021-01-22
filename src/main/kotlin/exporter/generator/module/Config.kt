@@ -144,7 +144,11 @@ class Config(
 
     fun getViewControllerName() = "${classesPrefix.capitalize()}ViewController"
 
-    fun getRootScreenImport() = "com.synesis.gem.$packageName.${screenName}"
+    fun getRootScreenImport() = if (screenName.isBlank()) {
+        "com.synesis.gem.$packageName"
+    } else {
+        "com.synesis.gem.$packageName.${screenName}"
+    }
 
     fun getDIComponentImport(): String {
         return "${getRootScreenImport()}.di.components.${getDIComponentName()}"
@@ -175,6 +179,7 @@ class Config(
     }
 
     fun getLayoutName(): String {
-        return "fragment_" + classesPrefix.split("(?<=.)(?=\\p{Lu})".toRegex()).joinToString(separator = "_").toLowerCase()
+        return "fragment_" + classesPrefix.split("(?<=.)(?=\\p{Lu})".toRegex()).joinToString(separator = "_")
+            .toLowerCase()
     }
 }
