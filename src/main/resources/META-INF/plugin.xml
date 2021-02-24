@@ -21,11 +21,6 @@
                text="GEM Utils"
                description="GEM helper">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="exporter.generate.strings"
-                    class="exporter.action.StringsGenerateAction"
-                    text="Generate Strings"
-                    description="Generate strings"/>
-
             <action id="exporter.generate.strings.locize"
                     class="exporter.action.LocizeGenerateAction"
                     text="Generate Strings From Locize.io"

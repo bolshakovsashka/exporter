@@ -15,33 +15,40 @@ class StringsFilesGenerator {
 //        }
         root.mkdirs()
         strings.forEach {
-            val postfix = when (it.translation) {
-                "-en" -> ""
-                "-id" -> "-in"
-                else -> it.translation
-            }
-            val languageFolder = File(root, "values$postfix")
-            if (!languageFolder.exists()) {
-                languageFolder.mkdir()
-            }
-            val stringsFile = File(languageFolder, "strings.xml")
-            if (stringsFile.exists()) {
-                stringsFile.delete()
-            }
-            val stringBuilder = StringBuilder()
-            stringBuilder
-                .appendln("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                .appendln("<resources>")
-            it.values
-                .filter { it.value.isNotEmpty() && it.key.isNotEmpty() }
-                .forEach {
-                    stringBuilder.appendln("    <string name=\"${it.key}\">${it.value}</string>")
+            if (it.values.isNotEmpty()) {
+                val postfix = when (it.translation) {
+                    "-en" -> ""
+                    "-id" -> "-in"
+                    else -> it.translation
                 }
-            stringBuilder.appendln("</resources>\n")
+                val languageFolder = File(root, "values$postfix")
+                if (!languageFolder.exists()) {
+                    languageFolder.mkdir()
+                }
+                val fileName = if (it.nameSpace.trim().equals("Strings", true)) {
+                    "strings.xml"
+                } else {
+                    "strings_${it.nameSpace.trim()}.xml"
+                }
+                val stringsFile = File(languageFolder, fileName)
+                if (stringsFile.exists()) {
+                    stringsFile.delete()
+                }
+                val stringBuilder = StringBuilder()
+                stringBuilder
+                    .appendln("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+                    .appendln("<resources>")
+                it.values
+                    .filter { it.value.isNotEmpty() && it.key.isNotEmpty() }
+                    .forEach {
+                        stringBuilder.appendln("    <string name=\"${it.key.trim()}\">${it.value.trim()}</string>")
+                    }
+                stringBuilder.appendln("</resources>\n")
 
-            val out = BufferedWriter(OutputStreamWriter(FileOutputStream(stringsFile.path), "UTF-8"))
-            out.write(stringBuilder.toString())
-            out.close()
+                val out = BufferedWriter(OutputStreamWriter(FileOutputStream(stringsFile.path), "UTF-8"))
+                out.write(stringBuilder.toString())
+                out.close()
+            }
         }
     }
 }
